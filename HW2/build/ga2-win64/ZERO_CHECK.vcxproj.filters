@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Zaire\Documents\Game Arch\GameArch\HW2\build\ga2-win64\CMakeFiles\c5eb8e937f98ce329a33cd7e83eaad0f\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FB7A7C63-E611-3505-B75C-C75447C5BC11}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

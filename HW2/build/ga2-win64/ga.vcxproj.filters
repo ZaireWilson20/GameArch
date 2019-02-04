@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Zaire\Documents\Game Arch\GameArch\HW2\src\engine\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Zaire\Documents\Game Arch\GameArch\HW2\src\engine\math\ga_mat4f.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Zaire\Documents\Game Arch\GameArch\HW2\src\engine\math\ga_mat4f.tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Zaire\Documents\Game Arch\GameArch\HW2\src\engine\math\ga_vec3f.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Zaire\Documents\Game Arch\GameArch\HW2\src\engine\math\ga_vec3f.tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Zaire\Documents\Game Arch\GameArch\HW2\src\engine\math\ga_vec4f.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Zaire\Documents\Game Arch\GameArch\HW2\src\engine\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{878DB806-A275-3F62-B054-262A58593828}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,3 @@
+C:/Users/Zaire/Documents/Game Arch/GameArch/HW2/build/ga2-win64/CMakeFiles/ga.dir
+C:/Users/Zaire/Documents/Game Arch/GameArch/HW2/build/ga2-win64/CMakeFiles/ALL_BUILD.dir
+C:/Users/Zaire/Documents/Game Arch/GameArch/HW2/build/ga2-win64/CMakeFiles/ZERO_CHECK.dir
