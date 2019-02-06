@@ -11,7 +11,7 @@
 
 #include "math/ga_math.h"
 
-#include <cmath>
+#include <math.h>
 
 void ga_mat4f::make_identity()
 {
@@ -38,9 +38,9 @@ void ga_mat4f::make_identity()
 void ga_mat4f::make_translation(const ga_vec3f& __restrict t)
 {
 	(*this).make_identity(); 
-	data[0][3] = t.x; 
-	data[1][3] = t.y; 
-	data[2][3] = t.z; 
+	(*this).data[3][0] = t.x; 
+	(*this).data[3][1] = t.y;
+	(*this).data[3][2] = t.z;
 	// TODO: Homework 2
 }
 
@@ -57,10 +57,10 @@ void ga_mat4f::make_scaling(float s)
 void ga_mat4f::make_rotation_x(float angle)
 {
 	(*this).make_identity(); 
-	(*this).data[1][1] = signiCloseZero(ga_cosf(-angle));
-	(*this).data[1][2] = signiCloseZero(-1 * ga_sinf(-angle));
-	(*this).data[2][1] = signiCloseZero(ga_sinf(-angle));
-	(*this).data[2][2] = signiCloseZero(ga_cosf(-angle));
+	(*this).data[1][1] = signiCloseZero(ga_cosf(angle));
+	(*this).data[2][1] = signiCloseZero(-1 * ga_sinf(angle));
+	(*this).data[1][2] = signiCloseZero(ga_sinf(angle));
+	(*this).data[2][2] = signiCloseZero(ga_cosf(angle));
 	
 
 	// TODO: Homework 2
@@ -70,25 +70,25 @@ void ga_mat4f::make_rotation_y(float angle)
 {
 	// TODO: Homework 2
 	(*this).make_identity();
-	(*this).data[0][0] = signiCloseZero(ga_cosf(-angle));
+	(*this).data[0][0] = signiCloseZero(ga_cosf(angle));
 	
 
-	(*this).data[0][2] = signiCloseZero(ga_sinf(-angle));
+	(*this).data[2][0] = signiCloseZero(ga_sinf(angle));
 
 
 
-	(*this).data[2][0] = signiCloseZero(-1 * ga_sinf(-angle));
-	(*this).data[2][2] = signiCloseZero(ga_cosf(-angle));
+	(*this).data[0][2] = signiCloseZero(-1 * ga_sinf(angle));
+	(*this).data[2][2] = signiCloseZero(ga_cosf(angle));
 }
 
 void ga_mat4f::make_rotation_z(float angle)
 {
 	// TODO: Homework 2
 	(*this).make_identity();
-	(*this).data[0][0] = signiCloseZero(ga_cosf(-angle));
-	(*this).data[0][1] = signiCloseZero(-1 * ga_sinf(-angle));
-	(*this).data[1][0] = signiCloseZero(ga_sinf(-angle));
-	(*this).data[1][1] = signiCloseZero(ga_cosf(-angle));
+	(*this).data[0][0] = signiCloseZero(ga_cosf(angle));
+	(*this).data[1][0] = signiCloseZero(-1 * ga_sinf(angle));
+	(*this).data[0][1] = signiCloseZero(ga_sinf(angle));
+	(*this).data[1][1] = signiCloseZero(ga_cosf(angle));
 }
 
 void ga_mat4f::translate(const ga_vec3f& __restrict t)
@@ -129,18 +129,19 @@ void ga_mat4f::rotate_z(float angle)
 ga_mat4f ga_mat4f::operator*(const ga_mat4f& __restrict b) const
 {
 	// TODO: Homework 2
-	float newMat[4][4];
-	for (int i = 0; i < 4; i++) {
-		for (int p = 0; p < 4; p++) {
-			float rowNum = 0;
-			for (int j = 0; j < 4; j++) {
-				rowNum += ((*this).data[j][i] * b.data[p][j]);
+	ga_mat4f newMat;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			newMat.data[j][i] = 0;
+			for (int k = 0; k < 4; k++)
+			{
+				newMat.data[j][i] += (*this).data[k][i] * b.data[j][k];
 			}
-			newMat[i][p] = rowNum;
 		}
-		 
 	}
-	return (*this);
+	return newMat;
 }
 
 ga_mat4f& ga_mat4f::operator*=(const ga_mat4f& __restrict m)
@@ -152,48 +153,46 @@ ga_mat4f& ga_mat4f::operator*=(const ga_mat4f& __restrict m)
 ga_vec4f ga_mat4f::transform(const ga_vec4f& __restrict in) const
 {
 	// TODO: Homework 2
-	ga_vec4f newVec = {0,0,0,0};
+	ga_vec4f copyVec = {0,0,0,0};
 	for (int i = 0; i < 4; i++) {
 		for (int p = 0; p < 1; p++) {
 			float rowNum = 0;
 			for (int j = 0; j < 4; j++) {
-				rowNum += ((*this).data[i][j] * in.axes[j]);
+				rowNum += ((*this).data[j][i] * in.axes[j]);
 			}
-			newVec.axes[i] = rowNum;
+			copyVec.axes[i] = rowNum;
 		}
 
 	}
-	newVec.x = newVec.axes[0];
-	newVec.y = newVec.axes[1];
-	newVec.z = newVec.axes[2];
-	newVec.w = newVec.axes[3];
+	copyVec.x = copyVec.axes[0];
+	copyVec.y = copyVec.axes[1];
+	copyVec.z = copyVec.axes[2];
+	copyVec.w = copyVec.axes[3];
 
 
 
-	return newVec;
+	return copyVec;
 }
 
 ga_vec3f ga_mat4f::transform_vector(const ga_vec3f& __restrict in) const
 {
 	// TODO: Homework 2
-	ga_vec4f newVec; 
+	ga_vec4f copyVec; 
 	ga_vec3f resultVec; 
-	newVec.x = in.x;
-	newVec.y = in.y;
-	newVec.z = in.z;
-	newVec.w = 1;
+	copyVec.x = in.x;
+	copyVec.y = in.y;
+	copyVec.z = in.z;
+	copyVec.w = 0;
+	ga_vec4f finVec4;
 	for (int i = 0; i < 4; i++) {
-		for (int p = 0; p < 1; p++) {
 			float rowNum = 0;
 			for (int j = 0; j < 4; j++) {
-				rowNum += ((*this).data[i][j] * in.axes[j]);
+				rowNum += ((*this).data[j][i] * copyVec.axes[j]);
 			}
-			newVec.axes[i] = rowNum;
-		}
+			finVec4.axes[i] = rowNum;
 
 	}
-
-	resultVec = { newVec.x / newVec.w, newVec.y / newVec.w, newVec.z / newVec.w };
+	resultVec = { finVec4.x , finVec4.y, finVec4.z};
 	
 	return resultVec;
 }
@@ -201,8 +200,26 @@ ga_vec3f ga_mat4f::transform_vector(const ga_vec3f& __restrict in) const
 ga_vec3f ga_mat4f::transform_point(const ga_vec3f& __restrict in) const
 {
 	// TODO: Homework 2
+	ga_vec4f copyVec;
+	ga_vec3f resultVec;
+	copyVec.x = in.x;
+	copyVec.y = in.y;
+	copyVec.z = in.z;
+	copyVec.w = 1;
+	ga_vec4f finVec4;
 
-	return ga_vec3f::zero_vector();
+	for (int i = 0; i < 4; i++) {
+			float rowNum = 0;
+			for (int j = 0; j < 4; j++) {
+				rowNum += ((*this).data[j][i] * copyVec.axes[j]);
+			}
+			finVec4.axes[i] = rowNum;
+	}
+
+	resultVec = { finVec4.x , finVec4.y, finVec4.z };
+
+	resultVec.printVec3();
+	return resultVec;
 }
 
 void ga_mat4f::transpose()
@@ -235,7 +252,7 @@ void ga_mat4f::printMatrix() {
 	for (int i = 0; i < 4; i++) {
 		std::cout << "{ ";
 		for (int j = 0; j < 4; j++) {
-			std::cout << (*this).data[i][j] << " " ;
+			std::cout << (*this).data[j][i] << " " ;
 		}
 		std::cout << std::endl; 
 	}

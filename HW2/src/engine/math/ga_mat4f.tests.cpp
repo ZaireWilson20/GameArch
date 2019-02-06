@@ -40,17 +40,15 @@ void ga_mat4f_tests()
 	assert(m1.equal(m2));
 
 	m1.make_identity();
-	m1.printMatrix();
 	
 	m2.make_rotation_x(0.0f);
-	m2.printMatrix();
+
 	assert(m1.equal(m2));
 
 	m1.make_rotation_x(GA_PI / 2.0f);
 
 	m2 = { { { 1, 0, 0, 0 },{ 0, 0, 1, 0 },{ 0, -1, 0, 0 },{ 0, 0, 0, 1 } } };
-	m1.printMatrix();
-	m2.printMatrix();
+
 	assert(m1.equal(m2));
 
 	m1.make_rotation_y(GA_PI / 2.0f);
@@ -64,6 +62,7 @@ void ga_mat4f_tests()
 	m2 = { { { 0, 1, 0, 0 },{ -1, 0, 0, 0 },{ 0, 0, 1, 0 },{ 0, 0, 0, 1 } } };
 
 	assert(m1.equal(m2));
+
 
 	m1.rotate_x(2 * GA_PI);
 
@@ -85,9 +84,7 @@ void ga_mat4f_tests()
 	v1 = { 1, 0, 0 };
 	
 	v2 = m1.transform_vector(v1);
-	std::cout << "\n";
-	m1.printMatrix();
-	v2.printVec3();
+
 	assert(v2.equal({ -1, 0, 0 }));
 
 	m1.make_rotation_x(-GA_PI / 2);
@@ -99,13 +96,12 @@ void ga_mat4f_tests()
 	assert(v2.equal({ 0, 0, -1 }));
 
 	v2 = m1.transform_point(v1);
-
 	assert(v2.equal({ 0, 0, -1 }));
 
 	m1.make_translation({ 2, 0, 3 });
 
 	v2 = m1.transform_vector(v1);
-
+	
 	assert(v2.equal(v1));
 
 	v2 = m1.transform_point(v1);
@@ -133,6 +129,7 @@ void ga_mat4f_tests()
 	assert(m1.equal(m3));
 
 	m1.make_rotation_y(GA_PI / 2);
+
 	m1.translate({ 2, -3, 0 });
 
 	m2 = { { { 0, 0, -1, 0 },{ 0, 1, 0, 0 },{ 1, 0, 0, 0 },{ 2, -3, 0, 1 } } };
